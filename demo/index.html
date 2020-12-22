@@ -1,77 +1,353 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+<!DOCTYPE html>
+<!-- saved from url=(0027)https://www.blockcerts.org/ -->
+<html>
 
-    <title>blockcerts-verifier demo</title>
-  </head>
-  <body>
-    <h1>Blockcerts Universal Verifier</h1>
-    <section>
-        <h1>Classic usage</h1>
-        <ul>
-            <li>
-                <a href="./no-api.html">No API usage</a>
-            </li>
-        </ul>
-    </section>
-    <section>
-        <h1>Using component API</h1>
-        <ul>
-            <li>
-                <a href="./with-api-certificate.html">Certificate passed directly to component</a>
-            </li>
-            <li>
-                <a href="./disable-verify-flag.html">Disabling verification</a>
-            </li>
-            <li>
-                <a href="./disable-auto-verify-flag.html">Disabling auto verification</a>
-            </li>
-            <li>
-                <a href="./allow-download-flag.html">Allowing download of certificate</a>
-            </li>
-            <li>
-                <a href="./allow-social-share-flag.html">Allowing social networks sharing of certificate</a>
-            </li>
-            <li>
-                <a href="./display-mode-card.html">Display Certificate in Card mode</a>
-            </li>
-            <li>
-                <a href="./display-mode-full.html">Display Certificate in Full mode</a>
-            </li>
-            <li>
-                <a href="./display-mode-fullscreen.html">Display Certificate in Fullscreen mode</a>
-            </li>
-            <li>
-                <a href="./show-metadata.html">Showing metadata</a>
-            </li>
-            <li>
-                <a href="./explorer-api.html">Explorer API</a>
-            </li>
-            <li>
-                <a href="./explorer-api-overwrite-default.html">Explorer API overwrite defaults</a>
-            </li>
-        </ul>
-    </section>
-    <section>
-        <h1>Event API</h1>
-        <ul>
-            <li>
-                <a href="events.html">Events examples</a>
-            </li>
-        </ul>
-    </section>
-    <section>
-        <h1>Theming</h1>
-        <ul>
-            <li>
-                <a href="dark-theme.html">Using in a dark environment</a>
-            </li>
-            <li>
-                <a href="bright-theme.html">Using in a bright environment</a>
-            </li>
-        </ul>
-    </section>
-  </body>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+  <meta name="viewport" content="width=device-width">
+  <meta name="description"
+    content="Build apps that issue and verify blockchain-based credentials for academic credentials, professional certifications, workforce development, and civic records.">
+  <meta name="author" content="Blockcerts">
+
+  <meta property="og:title" content="Blockchain Credentials">
+  <meta property="og:description"
+    content="Build apps that issue and verify blockchain-based credentials for academic credentials, professional certifications, workforce development, and civic records.">
+  <meta property="og:url" content="http://blockcerts.org/">
+  <meta property="og:site_name" content="Blockcerts">
+  <meta property="article:tag" content="Blockchain Credentials">
+  <meta property="og:image" content="/assets/img/pictures/blockcerts.png">
+
+  <link rel="shortcut icon" href="https://www.blockcerts.org/assets/img/icons/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="./main.css">
+
+  <script src="./@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+  <script type="module" src="./index.js"></script>
+  <script>
+    // HACK(keanulee): The Redux package assumes `process` exists - mock it here before
+    // the module is loaded.
+    window.process = {
+      env: {
+        NODE_ENV: 'development'
+      }
+    };
+  </script>
+
+
+  <title>Blockcerts : The Open Standard for Blockchain Credentials</title>
+  <script src="./custom-elements-es5-adapter.js"></script>
+  <!-- <script src="./webcomponents-loader.js"></script> -->
+  <!-- <script src="./Blockcerts _ The Open Standard for Blockchain Credentials_files/ie11.js"></script> -->
+
+  <!-- <link href="./Blockcerts _ The Open Standard for Blockchain Credentials_files/css" rel="stylesheet"> -->
+
+  <script>
+    const explorerAPI = {
+      serviceName: 'etherscan',
+      key: 'FJ3CZWH8PQBV8W5U6JR8TMKAYDHBKQ3B1D',
+      keyPropertyName: 'apikey'
+    };
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const verifierElement = document.querySelectorAll('blockcerts-verifier')[0];
+      verifierElement.explorerAPIs = [explorerAPI];
+    });
+  </script>
+
+  <style type="text/css">
+    /* Copyright 2014-present Evernote Corporation. All rights reserved. */
+    @keyframes caretBlink {
+      from {
+        opacity: 1.0;
+      }
+
+      to {
+        opacity: 0.0;
+      }
+    }
+
+    @keyframes rotateSpinner {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    #text-tool-caret {
+      animation-name: caretBlink;
+      animation-iteration-count: infinite;
+      animation-timing-function: cubic-bezier(1.0, 0, 0, 1.0);
+      animation-duration: 1s;
+    }
+
+    #en-markup-loading-spinner {
+      position: absolute;
+      top: calc(50% - 16px);
+      left: calc(50% - 16px);
+      width: 32px;
+      height: 32px;
+    }
+
+    #en-markup-loading-spinner img {
+      position: relative;
+      top: 0px;
+      left: 0px;
+      animation-name: rotateSpinner;
+      animation-duration: 0.6s;
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+  </style>
+  <style type="text/css">
+    /* Copyright 2014-present Evernote Corporation. All rights reserved. */
+    .skitchToastBoxContainer {
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      top: 30px;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      pointer-events: none;
+    }
+
+    .skitchToastBox {
+      width: 200px;
+      height: 16px;
+      padding: 12px;
+      background-color: rgba(47, 55, 61, 0.95);
+      border-radius: 4px;
+      color: white;
+      cursor: default;
+      font-size: 10pt;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.32);
+      font-family: 'Soleil', Helvetica, Arial, sans-serif;
+      border: 2px rgba(255, 255, 255, 0.38) solid;
+    }
+
+    .skitchToast {
+      padding-left: 20px;
+      padding-right: 20px;
+      display: inline-block;
+      height: 10px;
+      color: #f1f5f8;
+      text-align: center;
+    }
+
+    .skitchVisible {
+      /* Don't remove this class it's a hack used by the Evernote Clipper */
+    }
+  </style>
+  <style type="text/css">
+    /* Copyright 2014-present Evernote Corporation. All rights reserved. */
+
+    #en-markup-disabled {
+      position: fixed;
+      z-index: 9999;
+      width: 100%;
+      height: 100%;
+      top: 0px;
+      left: 0px;
+      cursor: default;
+      -webkit-user-select: none;
+    }
+
+    #en-markup-alert-container {
+      position: absolute;
+      z-index: 9999;
+      width: 450px;
+      left: calc(50% - 225px);
+      top: calc(50% - 85px);
+      background-color: white;
+      box-shadow: 0 2px 7px 1px rgba(0, 0, 0, 0.35);
+      -webkit-user-select: none;
+    }
+
+    #en-markup-alert-container .cell-1 {
+      position: relative;
+      height: 110px;
+      width: 105px;
+      float: left;
+      text-align: center;
+      background-image: url(data:image/png;base64,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);
+      background-position: 65% 50%;
+      background-repeat: no-repeat;
+    }
+
+    #en-markup-alert-container .cell-2 {
+      position: relative;
+      float: left;
+      width: 345px;
+      margin-top: 29px;
+      margin-bottom: 20px;
+    }
+
+    #en-markup-alert-container .cell-2 .cell-2-title {
+      margin-bottom: 5px;
+      padding-right: 30px;
+      font-size: 12pt;
+      font-family: Tahoma, Arial;
+    }
+
+    #en-markup-alert-container .cell-2 .cell-2-message {
+      padding-right: 30px;
+      font-size: 9.5pt;
+      font-family: Tahoma, Arial;
+    }
+
+    #en-markup-alert-container .cell-3 {
+      position: relative;
+      width: 450px;
+      height: 60px;
+      float: left;
+      background-color: rgb(240, 240, 240);
+    }
+
+    #en-markup-alert-container .cell-3 button {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      width: 110px;
+      height: 36px;
+    }
+
+    #en-markup-alert-container .cell-3 button.alt-button {
+      position: absolute;
+      top: 12px;
+      right: 140px;
+      width: 110px;
+      height: 36px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page_wrapper">
+    <div class="hero-cover">
+      <nav class="header header--01">
+        <div class="container header__container">
+
+          <div class="header__left_box"><a href="https://zircon.tech/" title="Home" class="header__logo_box"><img src="./zircontechdark.png" class="header__logo_img"></a></div>
+        </div>
+      </nav>
+
+      <div class="container cover__container--16 cover__content_box--16 hero-cover-img" style="position: relative;">
+
+        <div class="verifier">
+          <h2 class="hero-title">Universal Verifier</h2>
+          <!-- <blockcerts-verifier display-mode="fullscreen" theme="dark" clickable-urls="true"></blockcerts-verifier> -->
+          <blockcerts-verifier display-mode="card" theme="dark" clickable-urls="true"></blockcerts-verifier>
+        </div>
+        <div class="row margin1 download">
+          <div class="features__description">
+            <a href="./certificate.json" class="button button--border-green"
+              style="margin-right: 16px;" download>Download sample certificate</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="triangles triangles--brand">
+      <span></span>
+      <span></span>
+    </div>
+
+    <div class="features alignc">
+
+    <div class="features features--05">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-md-6 col-lg-6 margin1">
+            <div>
+              <h5>CREDENTIAL ISSUERS</h5>
+              <h2>Verify Anyone’s Achievements</h2>
+              <span class="subhead">Use the Universal Verifier to independently verify records. This service
+                can also be built into existing software systems for greater convenience.</span>
+            </div>
+          </div>
+          <div class="col-xs-12 col-md-6 col-lg-6 margin2">
+            <img src="./credential.png"
+              style="width: 100%;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+    <div class="features alignc features--06">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-lg-8 col-lg-push-2">
+            <h5>DEVELOPERS</h5>
+            <h2>The Open Standard for Blockchain Credentials</h2>
+            <span class="subhead">Build apps that issue and verify blockchain-based records for academic credentials,
+              professional certifications, workforce development, and civic records. The open standard ensures the
+              longevity and interoperability of digital records.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    <footer class="footer footer--04">
+
+      <div class="footer__main_box--04">
+        <div class="container footer__container"><a href="https://zircon.tech/"
+            class="footer__logo_box footer__logo_box--04"><img
+              src="./zircontechdark.png"
+              class="footer__logo"></a>
+
+          <ul class="social footer__social--04 footer__social_box">
+            <li class="social__item social__item--left_margin"><a href="https://twitter.com/zircon_tech"
+                title="Say hello in Twitter!" class="social__link social__link--twitter"></a></li>
+          </ul>
+        </div>
+      </div>
+
+    </footer>
+
+
+
+  </main>
+
+  <!-- <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date(); a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-1694379-18', 'auto');
+    ga('send', 'pageview');
+
+  </script> -->
+  <script>document.certificateTrackerOrigin = 'blockcerts.org';</script>
+  <script src="./buv-events.js"></script>
+  <script src="./main.js" defer=""></script>
+
+
+  <script src="./jquery-3.2.1.min.js"></script>
+
+  <link rel="stylesheet"
+    href="./jquery.fancybox.min.css">
+  <script src="./jquery.fancybox.min.js"></script>
+
+
+
+  <div class="js-overlay js-close-navigation js-close-menu overlay"></div>
+
+
+
+</body>
+
 </html>
